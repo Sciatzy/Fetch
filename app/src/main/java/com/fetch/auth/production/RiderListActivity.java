@@ -18,6 +18,7 @@ import com.fetch.auth.production.repository.AdminRepository;
 import com.fetch.auth.production.repository.AuthRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.List;
@@ -111,13 +112,21 @@ public class RiderListActivity extends AppCompatActivity implements RiderAccount
                 this::renderRiders,
                 error -> {
                     progressRiders.setVisibility(View.GONE);
-                    Toast.makeText(
-                            RiderListActivity.this,
-                            getString(R.string.admin_riders_load_failed, error != null ? error.getMessage() : getString(R.string.error_unknown)),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    String message = buildLoadErrorMessage(error, R.string.admin_riders_load_failed);
+                    Toast.makeText(RiderListActivity.this, message, Toast.LENGTH_LONG).show();
                 }
         );
+    }
+
+    private String buildLoadErrorMessage(Exception error, int genericFormatResId) {
+        if (error instanceof FirebaseFirestoreException) {
+            FirebaseFirestoreException firestoreError = (FirebaseFirestoreException) error;
+            if (firestoreError.getCode() == FirebaseFirestoreException.Code.PERMISSION_DENIED) {
+                return "Permission denied while loading admin lists. Check Firestore rules and confirm your account role is admin.";
+            }
+        }
+        String fallback = error != null ? error.getMessage() : getString(R.string.error_unknown);
+        return getString(genericFormatResId, fallback);
     }
 
     private void renderRiders(List<RiderAccountItem> items) {

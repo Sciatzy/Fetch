@@ -9,15 +9,21 @@ service cloud.firestore {
       return signedIn() && request.auth.uid == uid;
     }
 
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role is string
+        && lower(get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role) == "admin";
+    }
+
     match /users/{uid} {
-      allow read: if isOwner(uid);
+      allow read: if isOwner(uid) || isAdmin();
 
-      // Allow create/update only for the authenticated owner document.
-      allow create, update: if isOwner(uid)
-        && request.resource.data.uid == request.auth.uid;
+      // Allow create/update only for the authenticated owner document or an admin.
+      allow create, update: if (isOwner(uid) && request.resource.data.uid == request.auth.uid) || isAdmin();
 
-      // Optional: allow user to delete their own profile doc.
-      allow delete: if isOwner(uid);
+      // Optional: allow user to delete their own profile doc, or admin.
+      allow delete: if isOwner(uid) || isAdmin();
     }
 
     match /tasks/{taskId} {

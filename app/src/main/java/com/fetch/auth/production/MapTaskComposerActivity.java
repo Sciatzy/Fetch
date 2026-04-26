@@ -48,6 +48,9 @@ public class MapTaskComposerActivity extends AppCompatActivity {
 
     private EditText etMapTaskTitle;
     private EditText etMapTaskDescription;
+    private TextView chipLookingForRider;
+    private TextView chipPickUp;
+    private TextView chipFetchNow;
     private Button btnPickup;
     private Button btnDropoff;
     private Button btnCreateTaskWithMap;
@@ -108,6 +111,9 @@ public class MapTaskComposerActivity extends AppCompatActivity {
 
         etMapTaskTitle = findViewById(R.id.etMapTaskTitle);
         etMapTaskDescription = findViewById(R.id.etMapTaskDescription);
+        chipLookingForRider = findViewById(R.id.chipLookingForRider);
+        chipPickUp = findViewById(R.id.chipPickUp);
+        chipFetchNow = findViewById(R.id.chipFetchNow);
         btnPickup = findViewById(R.id.btnPickup);
         btnDropoff = findViewById(R.id.btnDropoff);
         btnCreateTaskWithMap = findViewById(R.id.btnCreateTaskWithMap);
@@ -116,6 +122,10 @@ public class MapTaskComposerActivity extends AppCompatActivity {
         osmMapView = findViewById(R.id.osmMapView);
 
         setupMap();
+
+        chipLookingForRider.setOnClickListener(v -> etMapTaskTitle.setText("Looking for Rider"));
+        chipPickUp.setOnClickListener(v -> etMapTaskTitle.setText("Pick up"));
+        chipFetchNow.setOnClickListener(v -> etMapTaskTitle.setText("Fetch now"));
 
         btnPickup.setOnClickListener(v -> {
             pickingPickup = true;

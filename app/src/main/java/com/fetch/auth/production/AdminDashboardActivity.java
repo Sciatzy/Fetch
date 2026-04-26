@@ -3,6 +3,7 @@ package com.fetch.auth.production;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
         userProfileRepository = new UserProfileRepository();
 
         TextView tvAdminEmail = findViewById(R.id.tvAdminEmail);
-        Button btnViewApplications = findViewById(R.id.btnViewApplications);
-        Button btnViewRiders = findViewById(R.id.btnViewRiders);
+        View btnViewApplications = findViewById(R.id.btnViewApplications);
+        View btnViewRiders = findViewById(R.id.btnViewRiders);
+        View btnAddRider = findViewById(R.id.btnAddRider);
         Button btnAdminLogout = findViewById(R.id.btnAdminLogout);
 
         FirebaseUser currentUser = authRepository.getCurrentUser();
@@ -56,6 +58,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
                 btnViewRiders.setOnClickListener(v ->
                         startActivity(new Intent(AdminDashboardActivity.this, RiderListActivity.class)));
+
+                btnAddRider.setOnClickListener(v ->
+                        startActivity(new Intent(AdminDashboardActivity.this, AdminAddRiderActivity.class)));
 
                 btnAdminLogout.setOnClickListener(v -> {
                     authRepository.signOut();

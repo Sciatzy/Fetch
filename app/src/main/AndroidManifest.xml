@@ -74,6 +74,10 @@
             android:exported="false" />
 
         <activity
+            android:name="com.fetch.auth.production.AdminAddRiderActivity"
+            android:exported="false" />
+
+        <activity
             android:name="com.fetch.auth.production.RiderApplicationsActivity"
             android:exported="false" />
 

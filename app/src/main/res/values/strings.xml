@@ -25,6 +25,18 @@
     <string name="auth_error_fb">Facebook login failed: %1$s</string>
     <string name="auth_error_google_auth">Google auth failed: %1$s</string>
 
+    <!-- Compatibility aliases used by activity_main.xml -->
+    <string name="welcome_back">Welcome back</string>
+    <string name="sign_in_continue">Sign in to continue</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="btn_login">Login</string>
+    <string name="or_continue_with">OR CONTINUE WITH</string>
+    <string name="google">Google</string>
+    <string name="facebook">Facebook</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="action_create_account">Create Account</string>
+
     <string name="complete_profile_title">Complete your profile</string>
     <string name="complete_profile_subtitle">Please provide your details before continuing.</string>
     <string name="hint_full_name">Full name</string>
@@ -277,6 +289,7 @@
     <string name="admin_action_failed">Action failed: %1$s</string>
     <string name="admin_applications_load_failed">Failed to load applications: %1$s</string>
     <string name="admin_riders_load_failed">Failed to load riders: %1$s</string>
+    <string name="admin_list_permission_denied">Permission denied while loading admin lists. Check Firestore rules and confirm your account role is admin.</string>
     <string name="admin_vehicle_format">Vehicle: %1$s</string>
     <string name="admin_license_format">License: %1$s</string>
     <string name="admin_rider_status_active">Status: Active</string>
