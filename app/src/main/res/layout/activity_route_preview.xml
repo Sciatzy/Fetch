@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <!-- Full Screen Map -->
+    <org.osmdroid.views.MapView
+        android:id="@+id/previewMapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top Header Bar -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF">
+
+            <!-- Left Arrow Icon (Simulated with text/shape for now, use a real drawable ideally) -->
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="←"
+                android:textSize="24sp"
+                android:textColor="#212121"
+                android:gravity="center"
+                android:background="@drawable/bg_input_rounded"
+                android:backgroundTint="#F5F5F5"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Route Preview"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#212121" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Review the pickup and drop-off locations"
+                    android:textSize="14sp"
+                    android:textColor="#757575" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Bottom Summary Card (Replicating exact target layout) -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="16dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="#FFFFFF">
+
+            <!-- Timeline visual (Left) -->
+            <View
+                android:id="@+id/dotBuy"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_avatar_circle"
+                android:backgroundTint="#4CAF50"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <View
+                android:id="@+id/lineDivider"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:background="#E0E0E0"
+                app:layout_constraintTop_toBottomOf="@id/dotBuy"
+                app:layout_constraintBottom_toTopOf="@id/dotDeliver"
+                app:layout_constraintStart_toStartOf="@id/dotBuy"
+                app:layout_constraintEnd_toEndOf="@id/dotBuy"/>
+
+            <View
+                android:id="@+id/dotDeliver"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_avatar_circle"
+                android:backgroundTint="#F44336"
+                android:layout_marginTop="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dotBuy"/>
+
+            <!-- Locations Text (Middle) -->
+            <LinearLayout
+                android:id="@+id/buyContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintStart_toEndOf="@id/dotBuy"
+                app:layout_constraintTop_toTopOf="@id/dotBuy"
+                app:layout_constraintEnd_toStartOf="@id/priceDivider">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Buy Location"
+                    android:textColor="#4CAF50"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <!-- IMPORTANT ID PRESERVED -->
+                <TextView
+                    android:id="@+id/tvPreviewPickup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/deliverContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                app:layout_constraintStart_toEndOf="@id/dotDeliver"
+                app:layout_constraintTop_toTopOf="@id/dotDeliver"
+                app:layout_constraintEnd_toStartOf="@id/priceDivider">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Deliver Location"
+                    android:textColor="#F44336"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <!-- IMPORTANT ID PRESERVED -->
+                <TextView
+                    android:id="@+id/tvPreviewDropoff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Vertical Divider to separate budget -->
+            <View
+                android:id="@+id/priceDivider"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:background="#E0E0E0"
+                app:layout_constraintTop_toTopOf="@id/buyContainer"
+                app:layout_constraintBottom_toBottomOf="@id/deliverContainer"
+                app:layout_constraintEnd_toStartOf="@id/budgetContainer"/>
+
+            <!-- Budget Area (Right) -->
+            <LinearLayout
+                android:id="@+id/budgetContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="end"
+                android:layout_marginStart="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/deliverContainer">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Your Budget"
+                    android:textColor="#757575"
+                    android:textSize="13sp" />
+
+                <!-- IMPORTANT ID PRESERVED -->
+                <TextView
+                    android:id="@+id/tvPreviewAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#4CAF50"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Divider before buttons -->
+            <View
+                android:id="@+id/horizDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#EEEEEE"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@id/deliverContainer"/>
+
+            <!-- Buttons Row -->
+            <LinearLayout
+                android:id="@+id/buttonsRow"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/horizDivider">
+
+                <!-- IMPORTANT ID PRESERVED for closing -->
+                <Button
+                    android:id="@+id/btnPreviewClose"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="← Go Back"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:background="@drawable/bg_input_rounded"
+                    app:backgroundTint="#F2F2F2"
+                    android:textColor="#212121" />
+
+                <!-- Visual Confirm Button (No ID change requested, keeping for visual parity) -->
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:layout_marginStart="8dp"
+                    android:text="✓ Confirm Route"
+                    android:textAllCaps="false"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:background="@drawable/bg_button_primary"
+                    app:backgroundTint="#4CAF50"
+                    android:textColor="#FFFFFF" />
+            </LinearLayout>
+
+            <!-- Info Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:background="@drawable/bg_input_rounded"
+                app:backgroundTint="#E8F5E9"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/buttonsRow">
+                
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Review the route carefully before confirming.\nYou can adjust the locations by going back."
+                    android:textSize="12sp"
+                    android:textColor="#2E7D32"/>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <queries>
+        <package android:name="com.google.android.gms" />
+        <package android:name="com.facebook.katana" />
+    </queries>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Fetch">
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.fetch.auth.production.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.fetch.auth.production.HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.CustomerMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.RiderMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.AdminDashboardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.RiderApplicationsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.RiderListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.CompleteProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.CustomerCreateTaskActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.RiderTaskFeedActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.PersonalInfoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.ProfileInformationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.VerificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.MapTaskComposerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.TaskTrackingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.RoutePreviewActivity"
+            android:exported="false" />
+
+        <service
+            android:name="com.fetch.auth.production.messaging.FetchFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="com.fetch.auth.production.location.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

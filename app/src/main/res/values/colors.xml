@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fetch brand palette inspired by the provided logo -->
+    <color name="brand_red">#E51D27</color>
+    <color name="brand_red_dark">#B2131A</color>
+    <color name="brand_yellow">#F8C400</color>
+    <color name="brand_blue">#2C43F6</color>
+    <color name="brand_ink">#111216</color>
+
+    <!-- Semantic surfaces -->
+    <color name="black">#191B22</color>
+    <color name="pure_black">#101114</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="bg_gray">#F6F7FB</color>
+    <color name="input_gray">#FFFFFF</color>
+    <color name="text_grey">#6F7382</color>
+    <color name="divider_color">#E8EAF1</color>
+    <color name="surface_alt">#F1F3F9</color>
+
+    <!-- Backward-compatible aliases used by existing resources -->
+    <color name="fetch_red">@color/brand_red</color>
+    <color name="fetch_red_dark">@color/brand_red_dark</color>
+    <color name="light_grey">@color/surface_alt</color>
+</resources>

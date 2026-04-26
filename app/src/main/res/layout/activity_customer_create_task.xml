@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:ignore="Autofill"
+    android:background="@color/bg_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_task_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_task_subtitle_auto"
+            android:textColor="@color/text_grey"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/etTaskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:hint="@string/task_title_hint"
+            android:inputType="textCapSentences"
+            android:importantForAutofill="no"
+            tools:ignore="Autofill"
+            android:maxLines="1"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@drawable/bg_input_rounded"
+            android:padding="16dp"
+            android:gravity="top|start"
+            android:hint="@string/task_description_hint"
+            android:inputType="textMultiLine|textCapSentences"
+            android:importantForAutofill="no"
+            tools:ignore="Autofill"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/task_auto_pricing_hint"
+            android:textColor="@color/brand_blue"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btnSubmitTask"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/continue_to_map"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+</ScrollView>

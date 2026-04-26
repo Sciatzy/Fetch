@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/ivVerificationLogo"
+            android:layout_width="84dp"
+            android:layout_height="84dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_avatar_circle"
+            android:padding="6dp"
+            android:src="@drawable/fetch_logo"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verification"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/brand_ink"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card_white"
+            android:padding="16dp"
+            android:layout_marginBottom="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_account_role"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:textSize="12sp"
+                android:textAllCaps="true" />
+
+            <TextView
+                android:id="@+id/tvVerificationRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textColor="@color/pure_black"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/verification_status_label"
+                android:textStyle="bold"
+                android:textColor="@color/text_grey"
+                android:textSize="12sp"
+                android:textAllCaps="true"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/tvVerificationStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textColor="@color/pure_black"
+                android:textSize="16sp"
+                android:layout_marginTop="6dp" />
+
+            <TextView
+                android:id="@+id/tvVerificationNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/loading"
+                android:textColor="@color/text_grey"
+                android:textSize="13sp"
+                android:layout_marginTop="12dp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmitVerification"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/verification_submit"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btnBackVerification"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/go_back"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:background="@drawable/bg_input_rounded"
+            app:backgroundTint="@null"
+            android:textColor="@color/pure_black"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</ScrollView>
+
+
+

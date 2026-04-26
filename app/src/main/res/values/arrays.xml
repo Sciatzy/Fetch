@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="vehicle_types">
+        <item>@string/vehicle_type_prompt</item>
+        <item>Motorcycle</item>
+        <item>Bicycle</item>
+        <item>Car</item>
+        <item>Van</item>
+    </string-array>
+</resources>
+
+

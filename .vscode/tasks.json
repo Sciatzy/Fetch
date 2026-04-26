@@ -1,0 +1,75 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Android: Assemble Debug",
+      "type": "shell",
+      "command": "${workspaceFolder}\\gradlew.bat",
+      "args": [":app:assembleDebug"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Install Debug",
+      "type": "shell",
+      "command": "${workspaceFolder}\\gradlew.bat",
+      "args": [":app:installDebug"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Launch App",
+      "type": "shell",
+      "command": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools\\adb.exe",
+      "args": [
+        "shell",
+        "monkey",
+        "-p",
+        "com.fetch.auth.production",
+        "-c",
+        "android.intent.category.LAUNCHER",
+        "1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Run (Install + Launch)",
+      "dependsOn": [
+        "Android: Install Debug",
+        "Android: Launch App"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Unit Tests",
+      "type": "shell",
+      "command": "${workspaceFolder}\\gradlew.bat",
+      "args": [":app:testDebugUnitTest"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Logcat",
+      "type": "shell",
+      "command": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools\\adb.exe",
+      "args": ["logcat"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Connected Devices",
+      "type": "shell",
+      "command": "${env:LOCALAPPDATA}\\Android\\Sdk\\platform-tools\\adb.exe",
+      "args": ["devices"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Android: Clean",
+      "type": "shell",
+      "command": "${workspaceFolder}\\gradlew.bat",
+      "args": [":app:clean"],
+      "problemMatcher": []
+    }
+  ]
+}

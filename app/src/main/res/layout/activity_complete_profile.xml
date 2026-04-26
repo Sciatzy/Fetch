@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/bg_gray">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_profile_title"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/complete_profile_subtitle"
+            android:textColor="@color/text_grey"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <EditText
+            android:id="@+id/etFullName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:hint="@string/hint_full_name"
+            android:inputType="textPersonName"
+            android:autofillHints="name"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/bg_input_rounded"
+            android:paddingHorizontal="16dp"
+            android:hint="@string/hint_phone"
+            android:inputType="phone"
+            android:autofillHints="phone"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_role"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/rgRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <RadioButton
+                android:id="@+id/rbCustomer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/role_customer" />
+
+            <RadioButton
+                android:id="@+id/rbRider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/role_rider" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/layoutRiderFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp">
+
+            <Spinner
+                android:id="@+id/spinnerVehicleType"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_input_rounded"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:id="@+id/etLicenseNumber"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_input_rounded"
+                android:paddingHorizontal="16dp"
+                android:hint="@string/hint_license_number"
+                android:inputType="text"
+                android:autofillHints=""
+                android:layout_marginBottom="12dp" />
+
+            <Button
+                android:id="@+id/btnGovernmentId"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/upload_government_id"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:background="@drawable/bg_input_rounded"
+                app:backgroundTint="@null"
+                android:textColor="@color/pure_black"
+                android:layout_marginBottom="8dp" />
+
+            <Button
+                android:id="@+id/btnSelfieVerification"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="@string/upload_selfie"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:background="@drawable/bg_input_rounded"
+                app:backgroundTint="@null"
+                android:textColor="@color/pure_black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutCustomerFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp">
+
+            <EditText
+                android:id="@+id/etDefaultAddress"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_input_rounded"
+                android:paddingHorizontal="16dp"
+                android:hint="@string/hint_default_address"
+                android:inputType="textPostalAddress"
+                android:autofillHints="postalAddress" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSaveProfile"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="@string/btn_save_profile"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:background="@drawable/bg_button_primary"
+            app:backgroundTint="@null"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</ScrollView>

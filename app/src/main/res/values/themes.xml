@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.Fetch" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/brand_red</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/brand_yellow</item>
+        <item name="colorOnPrimaryContainer">@color/brand_ink</item>
+        <item name="colorSecondary">@color/brand_blue</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/bg_gray</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="colorOutline">@color/divider_color</item>
+        <item name="android:windowBackground">@color/bg_gray</item>
+        <item name="android:statusBarColor">@color/bg_gray</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
+    <style name="Theme.Fetch" parent="Base.Theme.Fetch" />
+</resources>
