@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Spacing & Layout Rules -->
+    <dimen name="screen_padding_horizontal">20dp</dimen>
+    <dimen name="card_internal_padding">20dp</dimen>
+    <dimen name="section_gap">24dp</dimen>
+    <dimen name="list_item_gap">12dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="avatar_size">56dp</dimen>
+    <dimen name="bottom_nav_height">72dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+</resources>

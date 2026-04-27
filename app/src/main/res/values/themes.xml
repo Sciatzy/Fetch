@@ -1,19 +1,23 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="Base.Theme.Fetch" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/brand_red</item>
+        <item name="colorPrimary">@color/glass_red</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/brand_yellow</item>
         <item name="colorOnPrimaryContainer">@color/brand_ink</item>
-        <item name="colorSecondary">@color/brand_blue</item>
+        <item name="colorSecondary">@color/glass_red_muted</item>
         <item name="colorOnSecondary">@color/white</item>
-        <item name="colorSurface">@color/bg_gray</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="colorOutline">@color/divider_color</item>
-        <item name="android:windowBackground">@color/bg_gray</item>
-        <item name="android:statusBarColor">@color/bg_gray</item>
-        <item name="android:navigationBarColor">@color/white</item>
+        <item name="colorSurface">@color/glass_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        <item name="colorOutline">@color/glass_border</item>
+        <!-- Glassmorphism Specifics -->
+        <item name="android:windowBackground">@drawable/bg_screen_gradient</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
+        <!-- Typography: San Francisco style fallback -->
+        <item name="android:fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="Theme.Fetch" parent="Base.Theme.Fetch" />
