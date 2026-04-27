@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="3dp">
+    app:cardBackgroundColor="@color/glass_white_alpha"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/glass_border"
+        app:cardElevation="0dp"
+    app:cardCornerRadius="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/task_status_pending_label"
-                android:textColor="@color/brand_red"
+                android:textColor="@color/glass_red"
                 android:textStyle="bold"
                 android:textSize="12sp"
                 android:background="@drawable/bg_pending_badge"
@@ -44,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="@color/brand_red" />
+                android:textColor="@color/glass_red" />
         </LinearLayout>
 
         <!-- Typography Hierarchy Fixes -->
@@ -54,7 +56,7 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:textColor="@color/brand_ink"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="16dp"
             android:maxLines="2"
             android:ellipsize="end" />
@@ -64,7 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/text_grey"
+            android:textColor="@color/text_secondary"
             android:layout_marginTop="6dp"
             android:maxLines="2"
             android:ellipsize="end" />
@@ -90,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@color/brand_ink"
+            android:textColor="@color/text_primary"
             android:maxLines="2"
             android:ellipsize="end"
             android:layout_marginBottom="6dp" />
@@ -100,7 +102,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@color/brand_ink"
+            android:textColor="@color/text_primary"
             android:maxLines="2"
             android:ellipsize="end" />
 
@@ -121,9 +123,9 @@
                 android:textAllCaps="false"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                android:background="@drawable/bg_button_secondary"
+                android:background="@drawable/bg_button_ghost"
                 app:backgroundTint="@null"
-                android:textColor="@color/brand_ink"
+                android:textColor="@color/text_primary"
                 android:layout_marginEnd="8dp" />
 
             <Button
@@ -137,8 +139,8 @@
                 android:textStyle="bold"
                 android:background="@drawable/bg_button_primary"
                 app:backgroundTint="@null"
-                android:textColor="@color/white"
+                android:textColor="@color/glass_white"
                 android:layout_marginStart="8dp" />
         </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

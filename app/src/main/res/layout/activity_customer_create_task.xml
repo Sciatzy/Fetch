@@ -20,21 +20,21 @@
             android:text="@string/create_task_title"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_task_subtitle_auto"
-            android:textColor="@color/text_grey"
+            android:textColor="@color/text_secondary"
             android:layout_marginBottom="20dp" />
 
         <EditText
             android:id="@+id/etTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             android:paddingHorizontal="16dp"
             android:hint="@string/task_title_hint"
             android:inputType="textCapSentences"
@@ -47,7 +47,7 @@
             android:id="@+id/etTaskDescription"
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             android:padding="16dp"
             android:gravity="top|start"
             android:hint="@string/task_description_hint"
@@ -73,7 +73,7 @@
             android:textStyle="bold"
             android:background="@drawable/bg_button_primary"
             app:backgroundTint="@null"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/text_on_red" />
     </LinearLayout>
 
 </ScrollView>

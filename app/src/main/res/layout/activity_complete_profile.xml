@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/complete_profile_title"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/complete_profile_subtitle"
-            android:textColor="@color/text_grey"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"
             android:layout_marginBottom="24dp" />
 
@@ -33,7 +33,7 @@
             android:id="@+id/etFullName"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             android:paddingHorizontal="16dp"
             android:hint="@string/hint_full_name"
             android:inputType="textPersonName"
@@ -44,7 +44,7 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             android:paddingHorizontal="16dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
@@ -55,7 +55,7 @@
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             android:paddingHorizontal="16dp"
             android:hint="@string/hint_phone"
             android:inputType="phone"
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="@string/select_role"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/text_primary"
             android:layout_marginBottom="8dp" />
 
         <RadioGroup
@@ -104,14 +104,14 @@
                 android:id="@+id/spinnerVehicleType"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 android:layout_marginBottom="12dp" />
 
             <EditText
                 android:id="@+id/etLicenseNumber"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 android:paddingHorizontal="16dp"
                 android:hint="@string/hint_license_number"
                 android:inputType="text"
@@ -125,9 +125,9 @@
                 android:text="@string/upload_government_id"
                 android:textAllCaps="false"
                 android:textStyle="bold"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 app:backgroundTint="@null"
-                android:textColor="@color/pure_black"
+                android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
 
             <Button
@@ -137,9 +137,9 @@
                 android:text="@string/upload_selfie"
                 android:textAllCaps="false"
                 android:textStyle="bold"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 app:backgroundTint="@null"
-                android:textColor="@color/pure_black" />
+                android:textColor="@color/text_primary" />
         </LinearLayout>
 
         <LinearLayout
@@ -154,7 +154,7 @@
                 android:id="@+id/etDefaultAddress"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 android:paddingHorizontal="16dp"
                 android:hint="@string/hint_default_address"
                 android:inputType="textPostalAddress"
@@ -170,7 +170,7 @@
             android:textStyle="bold"
             android:background="@drawable/bg_button_primary"
             app:backgroundTint="@null"
-            android:textColor="@color/white" />
+            android:textColor="@color/glass_white" />
     </LinearLayout>
 
 </ScrollView>

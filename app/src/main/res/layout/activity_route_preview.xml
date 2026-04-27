@@ -12,7 +12,7 @@
         android:layout_height="match_parent" />
 
     <!-- Top Header Bar -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -26,7 +26,7 @@
             android:orientation="horizontal"
             android:padding="16dp"
             android:gravity="center_vertical"
-            android:background="#FFFFFF">
+            android:background="@color/glass_white">
 
             <!-- Left Arrow Icon (Simulated with text/shape for now, use a real drawable ideally) -->
             <TextView
@@ -34,9 +34,9 @@
                 android:layout_height="40dp"
                 android:text="←"
                 android:textSize="24sp"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:gravity="center"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 android:backgroundTint="#F5F5F5"/>
 
             <LinearLayout
@@ -52,20 +52,20 @@
                     android:text="Route Preview"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="#212121" />
+                    android:textColor="@color/text_primary" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Review the pickup and drop-off locations"
                     android:textSize="14sp"
-                    android:textColor="#757575" />
+                    android:textColor="@color/text_secondary" />
             </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Bottom Summary Card (Replicating exact target layout) -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:background="#FFFFFF">
+            android:background="@color/glass_white">
 
             <!-- Timeline visual (Left) -->
             <View
@@ -134,7 +134,7 @@
                     android:id="@+id/tvPreviewPickup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#212121"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -163,7 +163,7 @@
                     android:id="@+id/tvPreviewDropoff"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#212121"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -194,7 +194,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Your Budget"
-                    android:textColor="#757575"
+                    android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
 
                 <!-- IMPORTANT ID PRESERVED -->
@@ -237,9 +237,9 @@
                     android:textAllCaps="false"
                     android:textStyle="bold"
                     android:textSize="15sp"
-                    android:background="@drawable/bg_input_rounded"
+                    android:background="@drawable/bg_input_field"
                     app:backgroundTint="#F2F2F2"
-                    android:textColor="#212121" />
+                    android:textColor="@color/text_primary" />
 
                 <!-- Visual Confirm Button (No ID change requested, keeping for visual parity) -->
                 <Button
@@ -253,7 +253,7 @@
                     android:textSize="15sp"
                     android:background="@drawable/bg_button_primary"
                     app:backgroundTint="#4CAF50"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/glass_white" />
             </LinearLayout>
 
             <!-- Info Bar -->
@@ -262,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="12dp"
-                android:background="@drawable/bg_input_rounded"
+                android:background="@drawable/bg_input_field"
                 app:backgroundTint="#E8F5E9"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/buttonsRow">
@@ -276,7 +276,7 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

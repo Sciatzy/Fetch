@@ -29,7 +29,7 @@
             android:text="@string/verification"
             android:textSize="28sp"
             android:textStyle="bold"
-            android:textColor="@color/brand_ink"
+            android:textColor="@color/text_primary"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp" />
 
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_account_role"
                 android:textStyle="bold"
-                android:textColor="@color/text_grey"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textAllCaps="true" />
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textColor="@color/pure_black"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginTop="6dp" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/verification_status_label"
                 android:textStyle="bold"
-                android:textColor="@color/text_grey"
+                android:textColor="@color/text_secondary"
                 android:textSize="12sp"
                 android:textAllCaps="true"
                 android:layout_marginTop="16dp" />
@@ -74,7 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textColor="@color/pure_black"
+                android:textColor="@color/text_primary"
                 android:textSize="16sp"
                 android:layout_marginTop="6dp" />
 
@@ -83,7 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/loading"
-                android:textColor="@color/text_grey"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp"
                 android:layout_marginTop="12dp" />
         </LinearLayout>
@@ -97,7 +97,7 @@
             android:textStyle="bold"
             android:background="@drawable/bg_button_primary"
             app:backgroundTint="@null"
-            android:textColor="@color/white" />
+            android:textColor="@color/glass_white" />
 
         <Button
             android:id="@+id/btnBackVerification"
@@ -106,9 +106,9 @@
             android:text="@string/go_back"
             android:textAllCaps="false"
             android:textStyle="bold"
-            android:background="@drawable/bg_input_rounded"
+            android:background="@drawable/bg_input_field"
             app:backgroundTint="@null"
-            android:textColor="@color/pure_black"
+            android:textColor="@color/text_primary"
             android:layout_marginTop="10dp" />
 
     </LinearLayout>

@@ -13,7 +13,7 @@
         android:id="@+id/tvApplicationName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/text_grey"
+        android:textColor="@color/text_secondary"
         android:textSize="13sp" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="14sp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="14sp" />
 
     <TextView
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/text_grey"
+        android:textColor="@color/text_secondary"
         android:textSize="13sp" />
 
     <LinearLayout
@@ -66,7 +66,7 @@
             app:backgroundTint="@null"
             android:text="@string/admin_approve"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/glass_white"
             android:textStyle="bold" />
 
         <Button
@@ -75,11 +75,11 @@
             android:layout_height="44dp"
             android:layout_weight="1"
             android:layout_marginStart="6dp"
-            android:background="@drawable/bg_button_secondary"
+            android:background="@drawable/bg_button_ghost"
             app:backgroundTint="@null"
             android:text="@string/admin_reject"
             android:textAllCaps="false"
-            android:textColor="@color/brand_red"
+            android:textColor="@color/glass_red"
             android:textStyle="bold" />
     </LinearLayout>
 

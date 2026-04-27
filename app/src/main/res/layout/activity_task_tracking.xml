@@ -12,7 +12,7 @@
         android:layout_height="match_parent" />
 
     <!-- Top floating Banner: Status Display -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/statusBannerCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
-            android:background="#FFFFFF">
+            android:background="@color/glass_white">
 
             <!-- Title & User Info -->
             <LinearLayout
@@ -58,13 +58,13 @@
                         android:text="@string/tracking_title"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:textColor="#212121" />
+                        android:textColor="@color/text_primary" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/tracking_subtitle"
-                        android:textColor="#757575"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -93,13 +93,13 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/tracking_collect_hint_default"
-                android:textColor="#757575"
+                android:textColor="@color/text_secondary"
                 android:textSize="13sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <!-- Bottom Action Panel (Workflow Buttons) -->
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/workflowActionCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp"
-                android:background="#FFFFFF">
+                android:background="@color/glass_white">
 
                 <!-- Navigation buttons formatted as secondary -->
                 <LinearLayout
@@ -136,7 +136,7 @@
                         android:textAllCaps="false"
                         android:textStyle="bold"
                         android:layout_marginEnd="6dp"
-                        android:background="@drawable/bg_input_rounded"
+                        android:background="@drawable/bg_input_field"
                         app:backgroundTint="#FAFAFA"
                         android:textColor="#4CAF50" />
 
@@ -149,7 +149,7 @@
                         android:textAllCaps="false"
                         android:textStyle="bold"
                         android:layout_marginStart="6dp"
-                        android:background="@drawable/bg_input_rounded"
+                        android:background="@drawable/bg_input_field"
                         app:backgroundTint="#FAFAFA"
                         android:textColor="#F44336" />
                 </LinearLayout>
@@ -161,9 +161,9 @@
                     android:text="@string/tracking_call_customer"
                     android:textAllCaps="false"
                     android:textStyle="bold"
-                    android:background="@drawable/bg_input_rounded"
+                    android:background="@drawable/bg_input_field"
                     app:backgroundTint="#FAFAFA"
-                    android:textColor="#757575"
+                    android:textColor="@color/text_secondary"
                     android:layout_marginBottom="12dp" />
 
                 <View
@@ -183,7 +183,7 @@
                     android:textStyle="bold"
                     android:background="@drawable/bg_button_primary"
                     app:backgroundTint="#FF9800"
-                    android:textColor="@color/white"
+                    android:textColor="@color/glass_white"
                     android:layout_marginBottom="12dp" />
 
                 <Button
@@ -195,11 +195,11 @@
                     android:textStyle="bold"
                     android:background="@drawable/bg_button_primary"
                     app:backgroundTint="#4CAF50"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/glass_white" />
 
             </LinearLayout>
         </ScrollView>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

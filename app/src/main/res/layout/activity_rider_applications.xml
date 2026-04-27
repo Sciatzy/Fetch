@@ -17,10 +17,10 @@
             android:id="@+id/btnBackApplications"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:background="@drawable/bg_button_secondary"
+            android:background="@drawable/bg_button_ghost"
             android:text="@string/go_back"
             android:textAllCaps="false"
-            android:textColor="@color/brand_ink" />
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:layout_width="0dp"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:paddingStart="12dp"
             android:text="@string/admin_view_rider_applications"
-            android:textColor="@color/brand_ink"
+            android:textColor="@color/text_primary"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/admin_no_pending_applications"
-            android:textColor="@color/text_grey"
+            android:textColor="@color/text_secondary"
             android:textSize="14sp"
             android:visibility="gone" />
 

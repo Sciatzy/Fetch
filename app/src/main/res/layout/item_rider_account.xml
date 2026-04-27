@@ -13,7 +13,7 @@
         android:id="@+id/tvRiderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/text_grey"
+        android:textColor="@color/text_secondary"
         android:textSize="13sp" />
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="14sp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/brand_ink"
+        android:textColor="@color/text_primary"
         android:textSize="14sp" />
 
     <TextView
@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/text_grey"
+        android:textColor="@color/text_secondary"
         android:textSize="13sp" />
 
     <Button
@@ -54,11 +54,11 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginTop="14dp"
-        android:background="@drawable/bg_button_secondary"
+        android:background="@drawable/bg_button_ghost"
         app:backgroundTint="@null"
         android:text="@string/admin_deactivate"
         android:textAllCaps="false"
-        android:textColor="@color/brand_red"
+        android:textColor="@color/glass_red"
         android:textStyle="bold" />
 
 </LinearLayout>
