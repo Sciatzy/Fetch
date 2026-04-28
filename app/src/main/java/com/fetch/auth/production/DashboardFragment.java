@@ -20,9 +20,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.fetch.auth.production.repository.AuthRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
+import com.fetch.auth.production.util.StorageBackedImageLoader;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,10 +51,31 @@ public class DashboardFragment extends Fragment {
     private MaterialCardView cardPromo;
     private TextView tvOnlineRidersCount;
     private ListenerRegistration ridersListener;
+    
+    // New Service Shortcuts
+    private TextView btnClaimRewards;
+    private LinearLayout btnServiceRide;
+    private LinearLayout btnServiceBills;
+    private LinearLayout btnServiceFood;
+    private LinearLayout btnServiceFetch;
+
+    private LinearLayout btnPasaBuy;
+    private LinearLayout btnTransactionHistory;
+    private LinearLayout btnRewardsHistory;
+
+    private LinearLayout llOnlineRidersContainer;
 
     private AuthRepository authRepository;
     private UserProfileRepository userProfileRepository;
     private String currentRole;
+
+    private MaterialCardView cardRiderStats;
+    private TextView tvRiderEarnings;
+    private TextView tvRiderCompletedTasks;
+    private Button btnViewAnalytics;
+    
+    private MaterialCardView cardCustomerDashboard;
+    private LinearLayout llCustomerOnlineRiders;
 
     @Nullable
     @Override
@@ -73,7 +94,7 @@ public class DashboardFragment extends Fragment {
         tvSwipeHint = view.findViewById(R.id.tvSwipeHint);
         svCustomerCarousel = view.findViewById(R.id.svCustomerCarousel);
         cardActiveTask = view.findViewById(R.id.cardActiveTask);
-        tvActiveTaskTitle = view.findViewById(R.id.tvActiveTaskTitle);
+        tvActiveTaskTitle = view.findViewById(R.id .tvActiveTaskTitle);
         tvActiveTaskDesc = view.findViewById(R.id.tvActiveTaskDesc);
         cardQuickService = view.findViewById(R.id.cardQuickService);
         cardWallet = view.findViewById(R.id.cardWallet);
@@ -81,12 +102,100 @@ public class DashboardFragment extends Fragment {
         cardPromo = view.findViewById(R.id.cardPromo);
         tvOnlineRidersCount = view.findViewById(R.id.tvOnlineRidersCount);
 
+        cardRiderStats = view.findViewById(R.id.cardRiderStats);
+        tvRiderEarnings = view.findViewById(R.id.tvRiderEarnings);
+        tvRiderCompletedTasks = view.findViewById(R.id.tvRiderCompletedTasks);
+        btnViewAnalytics = view.findViewById(R.id.btnViewAnalytics);
+        
+        cardCustomerDashboard = view.findViewById(R.id.cardCustomerDashboard);
+        llCustomerOnlineRiders = view.findViewById(R.id.llCustomerOnlineRiders);
+        
+        btnClaimRewards = view.findViewById(R.id.btnClaimRewards);
+        btnServiceRide = view.findViewById(R.id.btnServiceRide);
+        btnServiceBills = view.findViewById(R.id.btnServiceBills);
+        btnServiceFood = view.findViewById(R.id.btnServiceFood);
+        btnServiceFetch = view.findViewById(R.id.btnServiceFetch);
+
+        btnPasaBuy = view.findViewById(R.id.btnPasaBuy);
+        btnTransactionHistory = view.findViewById(R.id.btnTransactionHistory);
+        btnRewardsHistory = view.findViewById(R.id.btnRewardsHistory);
+
+        llOnlineRidersContainer = view.findViewById(R.id.llOnlineRidersContainer);
+
         FirebaseUser user = authRepository.getCurrentUser();
         if (user != null) {
             loadDashboardData(user);
         }
 
         btnPrimaryAction.setOnClickListener(v -> openPrimaryTaskAction());
+        
+        if (btnClaimRewards != null) {
+            btnClaimRewards.setOnClickListener(v -> {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new RewardsFragment())
+                    .addToBackStack(null)
+                    .commit();
+            });
+        }
+        
+        if (btnServiceRide != null) {
+            btnServiceRide.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), MapTaskComposerActivity.class);
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_TITLE, "Find a Ride");
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_DESCRIPTION, "Fetching a ride to my destination.");
+                startActivity(intent);
+            });
+        }
+        
+        if (btnServiceBills != null) {
+            btnServiceBills.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), MapTaskComposerActivity.class);
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_TITLE, "Pay Bill");
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_DESCRIPTION, "Fetch the cash payment to pay my bill.");
+                startActivity(intent);
+            });
+        }
+        
+        if (btnServiceFood != null) {
+            btnServiceFood.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), MapTaskComposerActivity.class);
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_TITLE, "Order Food");
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_DESCRIPTION, "Buy and deliver food from my choice of place.");
+                startActivity(intent);
+            });
+        }
+        
+        if (btnServiceFetch != null) {
+            btnServiceFetch.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), MapTaskComposerActivity.class);
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_TITLE, "Fetch Item");
+                intent.putExtra(MapTaskComposerActivity.EXTRA_PREFILL_DESCRIPTION, "Pickup and drop-off an item.");
+                startActivity(intent);
+            });
+        }
+        
+        if (btnPasaBuy != null) {
+            btnPasaBuy.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), com.fetch.auth.production.pasabuy.PasaBuyFeedActivity.class);
+                intent.putExtra("USER_ROLE", currentRole);
+                startActivity(intent);
+            });
+        }
+        
+        if (btnTransactionHistory != null) {
+            btnTransactionHistory.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), TransactionHistoryActivity.class);
+                intent.putExtra(TransactionHistoryActivity.EXTRA_USER_ROLE, currentRole);
+                startActivity(intent);
+            });
+        }
+
+        if (btnRewardsHistory != null) {
+            btnRewardsHistory.setOnClickListener(v -> {
+                Intent intent = new Intent(requireContext(), RewardsHistoryActivity.class);
+                startActivity(intent);
+            });
+        }
 
         return view;
     }
@@ -100,11 +209,23 @@ public class DashboardFragment extends Fragment {
                 String name = document.getString("name");
                 String role = document.getString("role");
                 String profileImage = document.getString("profileImage");
+                if (TextUtils.isEmpty(profileImage)) {
+                    profileImage = document.getString("profileImageUrl");
+                }
+                
+                Double totalEarnings = document.getDouble("totalEarnings");
+                Long totalTasks = document.getLong("overallAcceptedTasks");
 
                 tvHomeName.setText(!TextUtils.isEmpty(name)
                         ? getString(R.string.home_hello_name, name)
                         : getString(R.string.home_hello));
                 currentRole = !TextUtils.isEmpty(role) ? role : getString(R.string.home_role_unknown);
+                
+                if (tvRiderEarnings != null && tvRiderCompletedTasks != null) {
+                    tvRiderEarnings.setText(String.format("PHP %.2f", totalEarnings != null ? totalEarnings : 0.0));
+                    tvRiderCompletedTasks.setText(String.valueOf(totalTasks != null ? totalTasks : 0));
+                }
+
                 bindPrimaryActionByRole(currentRole);
                 bindAvatar(profileImage);
             }
@@ -121,18 +242,7 @@ public class DashboardFragment extends Fragment {
 
     private void bindAvatar(String profileImageUrl) {
         if (!isAdded()) return;
-
-        if (TextUtils.isEmpty(profileImageUrl)) {
-            ivHomeAvatar.setImageResource(R.drawable.fetch_logo);
-            return;
-        }
-
-        Glide.with(this)
-                .load(profileImageUrl)
-                .placeholder(R.drawable.fetch_logo)
-                .error(R.drawable.fetch_logo)
-                .circleCrop()
-                .into(ivHomeAvatar);
+        StorageBackedImageLoader.load(ivHomeAvatar, profileImageUrl, R.drawable.fetch_logo, true);
     }
 
     private void bindPrimaryActionByRole(String role) {
@@ -141,6 +251,9 @@ public class DashboardFragment extends Fragment {
             tvHomePrimaryHint.setText(R.string.home_subtitle);
             layoutCarouselHeader.setVisibility(View.GONE);
             svCustomerCarousel.setVisibility(View.GONE);
+            cardRiderStats.setVisibility(View.GONE);
+            if (cardCustomerDashboard != null) cardCustomerDashboard.setVisibility(View.GONE);
+            if (llCustomerOnlineRiders != null) llCustomerOnlineRiders.setVisibility(View.GONE);
             stopListeningForRiders();
             return;
         }
@@ -153,6 +266,9 @@ public class DashboardFragment extends Fragment {
             // Carousel Setup
             layoutCarouselHeader.setVisibility(View.VISIBLE);
             svCustomerCarousel.setVisibility(View.VISIBLE);
+            cardRiderStats.setVisibility(View.GONE);
+            if (cardCustomerDashboard != null) cardCustomerDashboard.setVisibility(View.VISIBLE);
+            if (llCustomerOnlineRiders != null) llCustomerOnlineRiders.setVisibility(View.VISIBLE);
             svCustomerCarousel.setAlpha(1f); // Ensuring it is fully visible immediately
             
             // Give a visual bounce to hint the swipe function to users
@@ -205,6 +321,23 @@ public class DashboardFragment extends Fragment {
             tvHomePrimaryHint.setText(R.string.home_primary_hint_rider);
             layoutCarouselHeader.setVisibility(View.GONE);
             svCustomerCarousel.setVisibility(View.GONE);
+            cardRiderStats.setVisibility(View.VISIBLE);
+            
+            if (cardCustomerDashboard != null) cardCustomerDashboard.setVisibility(View.GONE);
+            if (llCustomerOnlineRiders != null) llCustomerOnlineRiders.setVisibility(View.GONE);
+            
+            btnViewAnalytics.setOnClickListener(v -> {
+                startActivity(new Intent(requireContext(), RiderAnalyticsActivity.class));
+            });
+            
+            cardRiderStats.setOnClickListener(v -> {
+                com.google.android.material.bottomnavigation.BottomNavigationView bottomNav = 
+                    requireActivity().findViewById(R.id.bottom_navigation);
+                if (bottomNav != null) {
+                    bottomNav.setSelectedItemId(R.id.nav_tasks);
+                }
+            });
+            
             stopListeningForRiders();
         } else {
             btnPrimaryAction.setEnabled(false);
@@ -212,6 +345,11 @@ public class DashboardFragment extends Fragment {
             tvHomePrimaryHint.setText(R.string.home_subtitle);
             layoutCarouselHeader.setVisibility(View.GONE);
             svCustomerCarousel.setVisibility(View.GONE);
+            cardRiderStats.setVisibility(View.GONE);
+            
+            if (cardCustomerDashboard != null) cardCustomerDashboard.setVisibility(View.GONE);
+            if (llCustomerOnlineRiders != null) llCustomerOnlineRiders.setVisibility(View.GONE);
+            
             stopListeningForRiders();
         }
     }
@@ -223,12 +361,26 @@ public class DashboardFragment extends Fragment {
         FirebaseFirestore.getInstance()
             .collection("tasks")
             .whereEqualTo("customerId", user.getUid())
-            .get()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
-                if (!isAdded()) return;
-                int taskCount = queryDocumentSnapshots.size();
-                double points = taskCount * 0.5;
-                tvRewardPoints.setText(String.format("%.1f Pts", points));
+            .whereEqualTo("status", "completed")
+            .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                if (e != null || !isAdded() || queryDocumentSnapshots == null) return;
+                
+                double totalPoints = 0.0;
+                for (com.google.firebase.firestore.DocumentSnapshot doc : queryDocumentSnapshots) {
+                    Double amount = doc.getDouble("estimatedFee");
+                    if (amount == null) amount = doc.getDouble("budget");
+                    if (amount != null && amount > 0) {
+                        totalPoints += Math.floor(amount / 50.0) * 0.5;
+                    }
+                }
+                
+                tvRewardPoints.setText(String.format("%.1f Pts", totalPoints));
+                
+                // Write points dynamically to user's profile to align with Rewards screen natively
+                FirebaseFirestore.getInstance()
+                    .collection("users")
+                    .document(user.getUid())
+                    .update("points", totalPoints);
             });
     }
 
@@ -259,24 +411,63 @@ public class DashboardFragment extends Fragment {
 
     private void startListeningForRiders() {
         if (ridersListener != null) return;
-        tvOnlineRidersCount.setText("Checking...");
+        if (tvOnlineRidersCount != null) {
+            tvOnlineRidersCount.setText("Checking...");
+        }
         
-        // Mock logic to read actual online riders or just active users that have role rider.
-        // Assuming there is a field that marks real-time online capability, but falling back to checking how many riders exist.
         ridersListener = FirebaseFirestore.getInstance()
                 .collection("users")
                 .whereEqualTo("role", "rider")
+                .whereEqualTo("isOnline", true)
                 .addSnapshotListener((value, error) -> {
                     if (error != null) {
-                        if (isAdded()) tvOnlineRidersCount.setText("Offline");
+                        if (isAdded() && tvOnlineRidersCount != null) tvOnlineRidersCount.setText("Offline");
                         return;
                     }
                     if (value != null && isAdded()) {
-                        int activeCount = value.size(); // Simplified approximation of available riders. 
-                        if (activeCount == 0) {
-                            tvOnlineRidersCount.setText("No riders online");
-                        } else {
-                            tvOnlineRidersCount.setText(activeCount + " riders online");
+                        int activeCount = value.size(); 
+                        if (tvOnlineRidersCount != null) {
+                            if (activeCount == 0) {
+                                tvOnlineRidersCount.setText("No riders online");
+                            } else {
+                                tvOnlineRidersCount.setText(activeCount + " riders online");
+                            }
+                        }
+
+                        if (llOnlineRidersContainer != null) {
+                            llOnlineRidersContainer.removeAllViews();
+                            if (activeCount == 0) {
+                                TextView tvEmpty = new TextView(requireContext());
+                                tvEmpty.setText("No online riders nearby.");
+                                tvEmpty.setTextColor(0xFF757575); // Grey
+                                tvEmpty.setPadding(16, 16, 16, 16);
+                                llOnlineRidersContainer.addView(tvEmpty);
+                            } else {
+                                LayoutInflater inflater = LayoutInflater.from(requireContext());
+                                for (DocumentSnapshot doc : value.getDocuments()) {
+                                    View riderView = inflater.inflate(R.layout.item_online_rider, llOnlineRidersContainer, false);
+                                    
+                                    TextView tvRiderName = riderView.findViewById(R.id.tvRiderName);
+                                    TextView tvRiderLocation = riderView.findViewById(R.id.tvRiderLocation);
+                                    ImageView ivRiderAvatar = riderView.findViewById(R.id.ivRiderAvatar);
+                                    
+                                    String name = doc.getString("name");
+                                    String profileImage = doc.getString("profileImage");
+                                    if (TextUtils.isEmpty(profileImage)) {
+                                        profileImage = doc.getString("profileImageUrl");
+                                    }
+                                    
+                                    tvRiderName.setText(!TextUtils.isEmpty(name) ? name : "Rider");
+                                    
+                                    // Mock location text
+                                    int randomDistance = (int)(Math.random() * 5) + 1;
+                                    tvRiderLocation.setText(randomDistance + " km away");
+                                    
+                                    StorageBackedImageLoader.load(ivRiderAvatar, profileImage, R.drawable.fetch_logo, true);
+                                    
+                                    llOnlineRidersContainer.addView(riderView);
+                                }
+                            }
                         }
                     }
                 });
@@ -310,4 +501,3 @@ public class DashboardFragment extends Fragment {
         }
     }
 }
-

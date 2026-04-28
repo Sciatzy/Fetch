@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.fetch.auth.production.model.ErrandTask;
 import com.fetch.auth.production.model.TaskFields;
 import com.fetch.auth.production.model.TaskStatus;
+import com.fetch.auth.production.validation.RiderTaskFlowValidator;
 import com.fetch.auth.production.validation.TaskValidator;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,13 +25,14 @@ import java.util.Map;
 public class TaskRepository {
 
     private static final String TASKS_COLLECTION = "tasks";
-    private static final String GEOFENCE_ENTERED_PICKUP = "entered_pickup";
     private static final long MAX_FEED_RESULTS = 300;
 
     private final FirebaseFirestore firestore;
+    private final NotificationRepository notificationRepository;
 
     public TaskRepository() {
         this.firestore = FirebaseFirestore.getInstance();
+        this.notificationRepository = new NotificationRepository();
     }
 
     public void createTask(
@@ -78,7 +80,10 @@ public class TaskRepository {
         taskData.put(TaskFields.LOCATION, location);
 
         docRef.set(taskData)
-                .addOnSuccessListener(unused -> callback.onSuccess(docRef.getId()))
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess(docRef.getId());
+                    dispatchTaskStatusPush(docRef.getId(), TaskStatus.PENDING, false);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -140,7 +145,10 @@ public class TaskRepository {
         taskData.put(TaskFields.GEOFENCE_STATE, "not_started");
 
         docRef.set(taskData)
-                .addOnSuccessListener(unused -> callback.onSuccess(docRef.getId()))
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess(docRef.getId());
+                    dispatchTaskStatusPush(docRef.getId(), TaskStatus.PENDING, false);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -251,7 +259,10 @@ public class TaskRepository {
             transaction.update(taskRef, updates);
 
             return null;
-        }).addOnSuccessListener(unused -> callback.onSuccess())
+        }).addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, TaskStatus.ACCEPTED, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -272,23 +283,17 @@ public class TaskRepository {
             String currentStatus = snapshot.getString(TaskFields.STATUS);
             String assignedRiderId = snapshot.getString(TaskFields.RIDER_ID);
             String geofenceState = snapshot.getString(TaskFields.GEOFENCE_STATE);
-
-            if (!TaskStatus.ACCEPTED.equals(currentStatus)) {
-                throw new IllegalStateException("Task must be accepted before arrival at pickup.");
-            }
-            if (assignedRiderId == null || !assignedRiderId.equals(riderId)) {
-                throw new IllegalStateException("Only the assigned rider can mark pickup arrival.");
-            }
-            if (!GEOFENCE_ENTERED_PICKUP.equals(geofenceState)) {
-                throw new IllegalStateException("You must be in the pickup zone to continue.");
-            }
+            RiderTaskFlowValidator.validateArrivedAtPickup(currentStatus, assignedRiderId, riderId, geofenceState);
 
             Map<String, Object> updates = new HashMap<>();
             updates.put(TaskFields.STATUS, TaskStatus.ARRIVED_PICKUP);
             updates.put(TaskFields.LAST_STATUS_UPDATED_AT, FieldValue.serverTimestamp());
             transaction.update(taskRef, updates);
             return null;
-        }).addOnSuccessListener(unused -> callback.onSuccess())
+        }).addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, TaskStatus.ARRIVED_PICKUP, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -298,6 +303,7 @@ public class TaskRepository {
             @NonNull OperationCallback callback
     ) {
         DocumentReference taskRef = firestore.collection(TASKS_COLLECTION).document(taskId);
+        DocumentReference riderRef = firestore.collection("users").document(riderId);
 
         firestore.runTransaction(transaction -> {
             DocumentSnapshot snapshot = transaction.get(taskRef);
@@ -308,20 +314,27 @@ public class TaskRepository {
 
             String currentStatus = snapshot.getString(TaskFields.STATUS);
             String assignedRiderId = snapshot.getString(TaskFields.RIDER_ID);
-
-            if (!TaskStatus.ARRIVED_DROPOFF.equals(currentStatus)) {
-                throw new IllegalStateException("Only active tasks can be completed.");
-            }
-            if (assignedRiderId == null || !assignedRiderId.equals(riderId)) {
-                throw new IllegalStateException("Only the assigned rider can complete this task.");
-            }
+            RiderTaskFlowValidator.validateCompletion(currentStatus, assignedRiderId, riderId);
 
             Map<String, Object> updates = new HashMap<>();
             updates.put(TaskFields.STATUS, TaskStatus.COMPLETED);
             updates.put(TaskFields.LAST_STATUS_UPDATED_AT, FieldValue.serverTimestamp());
             transaction.update(taskRef, updates);
+
+            Double estimatedFee = snapshot.getDouble(TaskFields.ESTIMATED_FEE);
+            Double budget = snapshot.getDouble(TaskFields.BUDGET);
+            double earnings = RiderTaskFlowValidator.resolveCompletionEarnings(estimatedFee, budget);
+
+            Map<String, Object> riderUpdates = new HashMap<>();
+            riderUpdates.put("totalEarnings", FieldValue.increment(earnings));
+            riderUpdates.put("overallAcceptedTasks", FieldValue.increment(1));
+            transaction.set(riderRef, riderUpdates, com.google.firebase.firestore.SetOptions.merge());
+
             return null;
-        }).addOnSuccessListener(unused -> callback.onSuccess())
+        }).addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, TaskStatus.COMPLETED, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -341,20 +354,17 @@ public class TaskRepository {
 
             String currentStatus = snapshot.getString(TaskFields.STATUS);
             String assignedRiderId = snapshot.getString(TaskFields.RIDER_ID);
-
-            if (!TaskStatus.ARRIVED_PICKUP.equals(currentStatus)) {
-                throw new IllegalStateException("Task must be at pickup before starting trip.");
-            }
-            if (assignedRiderId == null || !assignedRiderId.equals(riderId)) {
-                throw new IllegalStateException("Only the assigned rider can start this trip.");
-            }
+            RiderTaskFlowValidator.validateStartTrip(currentStatus, assignedRiderId, riderId);
 
             Map<String, Object> updates = new HashMap<>();
             updates.put(TaskFields.STATUS, TaskStatus.IN_PROGRESS);
             updates.put(TaskFields.LAST_STATUS_UPDATED_AT, FieldValue.serverTimestamp());
             transaction.update(taskRef, updates);
             return null;
-        }).addOnSuccessListener(unused -> callback.onSuccess())
+        }).addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, TaskStatus.IN_PROGRESS, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -374,20 +384,17 @@ public class TaskRepository {
 
             String currentStatus = snapshot.getString(TaskFields.STATUS);
             String assignedRiderId = snapshot.getString(TaskFields.RIDER_ID);
-
-            if (!TaskStatus.IN_PROGRESS.equals(currentStatus)) {
-                throw new IllegalStateException("Task must be in progress before arrival at drop-off.");
-            }
-            if (assignedRiderId == null || !assignedRiderId.equals(riderId)) {
-                throw new IllegalStateException("Only the assigned rider can mark drop-off arrival.");
-            }
+            RiderTaskFlowValidator.validateArrivedAtDropoff(currentStatus, assignedRiderId, riderId);
 
             Map<String, Object> updates = new HashMap<>();
             updates.put(TaskFields.STATUS, TaskStatus.ARRIVED_DROPOFF);
             updates.put(TaskFields.LAST_STATUS_UPDATED_AT, FieldValue.serverTimestamp());
             transaction.update(taskRef, updates);
             return null;
-        }).addOnSuccessListener(unused -> callback.onSuccess())
+        }).addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, TaskStatus.ARRIVED_DROPOFF, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -420,13 +427,25 @@ public class TaskRepository {
         firestore.collection(TASKS_COLLECTION)
                 .document(taskId)
                 .update(updates)
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, paymentStatus, false);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
     public void updateTaskStatus(
             @NonNull String taskId,
             @NonNull String status,
+            @NonNull OperationCallback callback
+    ) {
+        updateTaskStatus(taskId, status, false, callback);
+    }
+
+    public void updateTaskStatus(
+            @NonNull String taskId,
+            @NonNull String status,
+            boolean isRiderActor,
             @NonNull OperationCallback callback
     ) {
         Map<String, Object> updates = new HashMap<>();
@@ -436,7 +455,10 @@ public class TaskRepository {
         firestore.collection(TASKS_COLLECTION)
                 .document(taskId)
                 .update(updates)
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, status, isRiderActor);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -463,6 +485,10 @@ public class TaskRepository {
                 .addOnFailureListener(callback::onError);
     }
 
+    private void dispatchTaskStatusPush(@NonNull String taskId, @NonNull String status, boolean isRiderActor) {
+        notificationRepository.sendTaskStatusPush(taskId, status, isRiderActor);
+    }
+
     public void updateCollection(
             @NonNull String taskId,
             double amount,
@@ -482,7 +508,10 @@ public class TaskRepository {
         firestore.collection(TASKS_COLLECTION)
                 .document(taskId)
                 .update(updates)
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    dispatchTaskStatusPush(taskId, collectionStatus, true);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -543,4 +572,3 @@ public class TaskRepository {
         void onError(Exception error);
     }
 }
-

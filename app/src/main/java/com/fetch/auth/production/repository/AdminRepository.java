@@ -29,9 +29,11 @@ public class AdminRepository {
     private static final String APPLICATION_STATUS_DEACTIVATED = "deactivated";
 
     private final FirebaseFirestore firestore;
+    private final NotificationRepository notificationRepository;
 
     public AdminRepository() {
         this.firestore = FirebaseFirestore.getInstance();
+        this.notificationRepository = new NotificationRepository();
     }
 
     public ListenerRegistration listenPendingRiderApplications(
@@ -96,7 +98,10 @@ public class AdminRepository {
 
         batch.set(userRef, updates, SetOptions.merge());
         batch.commit()
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    notificationRepository.sendUserEventPush(userId, "rider_application_approved", userId);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -113,7 +118,10 @@ public class AdminRepository {
 
         batch.set(userRef, updates, SetOptions.merge());
         batch.commit()
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    notificationRepository.sendUserEventPush(userId, "rider_application_rejected", userId);
+                })
                 .addOnFailureListener(callback::onError);
     }
 
@@ -128,7 +136,10 @@ public class AdminRepository {
         updates.put("application.reviewedAt", FieldValue.serverTimestamp());
 
         userRef.set(updates, SetOptions.merge())
-                .addOnSuccessListener(unused -> callback.onSuccess())
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess();
+                    notificationRepository.sendUserEventPush(userId, "rider_account_deactivated", userId);
+                })
                 .addOnFailureListener(callback::onError);
     }
 

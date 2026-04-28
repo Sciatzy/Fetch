@@ -57,6 +57,7 @@ public class TaskTrackingActivity extends AppCompatActivity {
     private Button btnArrivedDestination;
     private Button btnCompleteAndCollect;
     private Button btnCallCustomer;
+    private Button btnCancelTask;
 
     private TaskRepository taskRepository;
     private AuthRepository authRepository;
@@ -123,6 +124,7 @@ public class TaskTrackingActivity extends AppCompatActivity {
         btnArrivedDestination = findViewById(R.id.btnArrivedDestination);
         btnCompleteAndCollect = findViewById(R.id.btnCompleteAndCollect);
         btnCallCustomer = findViewById(R.id.btnCallCustomer);
+        btnCancelTask = findViewById(R.id.btnCancelTask);
 
         taskId = getIntent().getStringExtra(EXTRA_TASK_ID);
         isRiderMode = getIntent().getBooleanExtra(EXTRA_IS_RIDER, false);
@@ -226,6 +228,30 @@ public class TaskTrackingActivity extends AppCompatActivity {
             }
             openDialer(customerPhone);
         });
+
+        btnCancelTask.setOnClickListener(v -> handleCancelTask());
+    }
+
+    private void handleCancelTask() {
+        new AlertDialog.Builder(this)
+            .setTitle("Cancel Task")
+            .setMessage("Are you sure you want to cancel this task?")
+            .setPositiveButton("Yes", (dialog, which) -> {
+                taskRepository.updateTaskStatus(taskId, TaskStatus.CANCELLED, new TaskRepository.OperationCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(TaskTrackingActivity.this, "Task canceled successfully.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Exception error) {
+                        Toast.makeText(TaskTrackingActivity.this, "Failed to cancel task.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            })
+            .setNegativeButton("No", null)
+            .show();
     }
 
     private void subscribeToTask() {
@@ -283,6 +309,15 @@ public class TaskTrackingActivity extends AppCompatActivity {
         refreshPickupZone(snapshot, status);
         maybeAutoLaunchNavigation(status);
         updateRiderActionState(status);
+
+        if (!isRiderMode) {
+            if (TaskStatus.PENDING.equals(status)) {
+                btnCancelTask.setVisibility(View.VISIBLE);
+            } else {
+                btnCancelTask.setVisibility(View.GONE);
+            }
+        }
+
         btnNavigatePickup.setEnabled(isRiderMode && pickupPoint != null);
         btnNavigateDropoff.setEnabled(isRiderMode && dropoffPoint != null);
     }
@@ -795,6 +830,4 @@ public class TaskTrackingActivity extends AppCompatActivity {
         }
     }
 }
-
-
 

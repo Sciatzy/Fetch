@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg_screen_gradient">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarPasaBuyTransaction"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#D32F2F"
+            app:title="PasaBuy Transaction"
+            app:titleTextColor="#FFFFFF" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvTransactionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Transaction: pending"
+            android:textColor="#212121"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPaymentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Payment: pending"
+            android:textColor="#616161" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTransactionMessages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="8dp"
+        android:paddingBottom="8dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical|bottom"
+        android:background="@android:color/transparent"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_chat_input"
+            android:gravity="bottom"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="4dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_gallery"
+                app:tint="#616161" />
+
+            <EditText
+                android:id="@+id/etTransactionMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="Ask anything..."
+                android:inputType="textMultiLine|textCapSentences"
+                android:maxLines="4"
+                android:minHeight="48dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="12dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E" />
+
+            <ImageView
+                android:id="@+id/btnSendTransactionMessage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="4dp"
+                android:padding="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#212121"
+                android:src="@drawable/ic_send" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:paddingBottom="8dp"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
+            <Button
+                android:id="@+id/btnApproveAvail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Approve Avail"
+                android:textAllCaps="false"
+                app:backgroundTint="#2E7D32"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnPaymentReceived"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Payment Received"
+                android:textAllCaps="false"
+                app:backgroundTint="#388E3C"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnOnWay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="On the way"
+                android:textAllCaps="false"
+                app:backgroundTint="#1976D2"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnAboutToDeliver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="About to deliver"
+                android:textAllCaps="false"
+                app:backgroundTint="#1565C0"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnCompleteTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Complete"
+                android:textAllCaps="false"
+                app:backgroundTint="#6A1B9A"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnNavigateCustomer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Navigate"
+                android:textAllCaps="false"
+                app:backgroundTint="#455A64"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnCancelAvail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Cancel Avail"
+                android:textAllCaps="false"
+                app:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnShareLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:text="Share Location"
+                android:textAllCaps="false"
+                app:backgroundTint="#1976D2"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/btnUploadPaymentProof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Proof"
+                android:textAllCaps="false"
+                app:backgroundTint="#455A64"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+</LinearLayout>

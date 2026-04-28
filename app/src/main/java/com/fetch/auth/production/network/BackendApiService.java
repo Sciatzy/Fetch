@@ -17,5 +17,13 @@ public interface BackendApiService {
 
     @POST("v1/fcm/task-status")
     Call<Void> sendTaskStatusPush(@Body TaskStatusPushRequest request);
-}
 
+    @POST("v1/fcm/pasabuy-status")
+    Call<Void> sendPasabuyStatusPush(@Body PasabuyStatusPushRequest request);
+
+    @POST("v1/fcm/user-event")
+    Call<Void> sendUserEventPush(@Body UserEventPushRequest request);
+
+    @POST("v1/fcm/role-event")
+    Call<Void> sendRoleEventPush(@Body RoleEventPushRequest request);
+}

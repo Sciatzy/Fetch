@@ -14,14 +14,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.fetch.auth.production.repository.AuthRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
+import com.fetch.auth.production.util.ImageDataUriUtil;
+import com.fetch.auth.production.util.StorageBackedImageLoader;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageException;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,8 +71,83 @@ public class ProfileInformationActivity extends AppCompatActivity {
         tvProfileEmail.setText(user.getEmail() != null ? user.getEmail() : getString(R.string.home_no_email));
         loadProfile();
 
-        btnChangePhoto.setOnClickListener(v -> pickImageLauncher.launch("image/*"));
+        btnChangePhoto.setOnClickListener(v -> showAvatarOptionsDialog());
         btnSaveProfileChanges.setOnClickListener(v -> saveProfileChanges());
+    }
+
+    private void showAvatarOptionsDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Change Profile Picture");
+        String[] options = {"Upload Photo", "Choose Default Emoji"};
+        builder.setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                pickImageLauncher.launch("image/*");
+            } else {
+                showEmojiPicker();
+            }
+        });
+        builder.show();
+    }
+
+    private void showEmojiPicker() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setTitle("Select Emoji");
+        String[] emojis = {"🐶", "🐱", "🐼", "🐻", "🦊", "🦁", "🐰", "🐸", "🚀", "⚡", "⭐", "🥑"};
+        builder.setItems(emojis, (dialog, which) -> {
+            String selectedEmoji = emojis[which];
+            uploadEmojiAsPhoto(selectedEmoji);
+        });
+        builder.show();
+    }
+
+    private void uploadEmojiAsPhoto(String emoji) {
+        if (TextUtils.isEmpty(currentUid)) return;
+        btnChangePhoto.setEnabled(false);
+        Toast.makeText(this, "Generating avatar...", Toast.LENGTH_SHORT).show();
+
+        // Create a bitmap from emoji
+        int size = 300;
+        android.graphics.Bitmap bitmap = android.graphics.Bitmap.createBitmap(size, size, android.graphics.Bitmap.Config.ARGB_8888);
+        android.graphics.Canvas canvas = new android.graphics.Canvas(bitmap);
+        
+        android.graphics.Paint bgPaint = new android.graphics.Paint();
+        bgPaint.setColor(android.graphics.Color.parseColor("#44000000")); // Darkish transparent or a solid color
+        bgPaint.setAntiAlias(true);
+        canvas.drawCircle(size/2f, size/2f, size/2f, bgPaint);
+
+        android.graphics.Paint textPaint = new android.graphics.Paint();
+        textPaint.setTextSize(size * 0.6f);
+        textPaint.setTextAlign(android.graphics.Paint.Align.CENTER);
+        textPaint.setAntiAlias(true);
+        
+        android.graphics.Paint.FontMetrics fm = textPaint.getFontMetrics();
+        float x = size / 2f;
+        float y = size / 2f - (fm.descent + fm.ascent) / 2f;
+        canvas.drawText(emoji, x, y, textPaint);
+
+        String imageDataUri = ImageDataUriUtil.toPngDataUri(bitmap);
+        if (TextUtils.isEmpty(imageDataUri)) {
+            btnChangePhoto.setEnabled(true);
+            Toast.makeText(ProfileInformationActivity.this, "Upload failed", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("profileImage", imageDataUri);
+        userProfileRepository.updateUserProfileFields(currentUid, updates, new UserProfileRepository.OperationCallback() {
+            @Override
+            public void onSuccess() {
+                btnChangePhoto.setEnabled(true);
+                bindProfileImage(imageDataUri);
+                Toast.makeText(ProfileInformationActivity.this, R.string.profile_photo_updated, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Exception error) {
+                btnChangePhoto.setEnabled(true);
+                Toast.makeText(ProfileInformationActivity.this, "Upload failed", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void loadProfile() {
@@ -88,6 +161,9 @@ public class ProfileInformationActivity extends AppCompatActivity {
                 String name = document.getString("name");
                 String phone = document.getString("phone");
                 String profileImage = document.getString("profileImage");
+                if (TextUtils.isEmpty(profileImage)) {
+                    profileImage = document.getString("profileImageUrl");
+                }
 
                 etProfileName.setText(!TextUtils.isEmpty(name) ? name : "");
                 etProfilePhone.setText(!TextUtils.isEmpty(phone) ? phone : "");
@@ -102,17 +178,7 @@ public class ProfileInformationActivity extends AppCompatActivity {
     }
 
     private void bindProfileImage(String imageUrl) {
-        if (TextUtils.isEmpty(imageUrl)) {
-            ivProfileAvatar.setImageResource(R.drawable.fetch_logo);
-            return;
-        }
-
-        Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.fetch_logo)
-                .error(R.drawable.fetch_logo)
-                .circleCrop()
-                .into(ivProfileAvatar);
+        StorageBackedImageLoader.load(ivProfileAvatar, imageUrl, R.drawable.fetch_logo, true);
     }
 
     private void uploadProfilePhoto(Uri imageUri) {
@@ -123,50 +189,36 @@ public class ProfileInformationActivity extends AppCompatActivity {
         btnChangePhoto.setEnabled(false);
         Toast.makeText(this, R.string.profile_photo_uploading, Toast.LENGTH_SHORT).show();
 
-        String fileName = "profile_" + System.currentTimeMillis() + ".jpg";
-        StorageReference profileRef = FirebaseStorage.getInstance()
-                .getReference()
-                .child("profile_images")
-                .child(currentUid)
-                .child(fileName);
-
-        profileRef.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot -> profileRef.getDownloadUrl()
-                        .addOnSuccessListener(downloadUri -> {
-                            Map<String, Object> updates = new HashMap<>();
-                            updates.put("profileImage", downloadUri.toString());
-
-                            userProfileRepository.updateUserProfileFields(currentUid, updates, new UserProfileRepository.OperationCallback() {
-                                @Override
-                                public void onSuccess() {
-                                    btnChangePhoto.setEnabled(true);
-                                    bindProfileImage(downloadUri.toString());
-                                    Toast.makeText(ProfileInformationActivity.this, R.string.profile_photo_updated, Toast.LENGTH_SHORT).show();
-                                }
-
-                                @Override
-                                public void onError(Exception error) {
-                                    btnChangePhoto.setEnabled(true);
-                                    String details = error != null ? error.getMessage() : getString(R.string.error_unknown);
-                                    Toast.makeText(ProfileInformationActivity.this, getString(R.string.profile_photo_upload_failed_detail, details), Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        })
-                        .addOnFailureListener(error -> {
-                            btnChangePhoto.setEnabled(true);
-                            String details = error.getMessage() != null ? error.getMessage() : getString(R.string.error_unknown);
-                            Toast.makeText(ProfileInformationActivity.this, getString(R.string.profile_photo_upload_failed_detail, details), Toast.LENGTH_LONG).show();
-                        }))
-                .addOnFailureListener(error -> {
+        new Thread(() -> {
+            String imageDataUri = ImageDataUriUtil.toJpegDataUri(this, imageUri, 960, 40);
+            runOnUiThread(() -> {
+                if (TextUtils.isEmpty(imageDataUri)) {
                     btnChangePhoto.setEnabled(true);
-                    String details;
-                    if (error instanceof StorageException) {
-                        details = "code=" + ((StorageException) error).getErrorCode();
-                    } else {
-                        details = error.getMessage() != null ? error.getMessage() : getString(R.string.error_unknown);
+                    Toast.makeText(ProfileInformationActivity.this,
+                            getString(R.string.profile_photo_upload_failed_detail, getString(R.string.error_unknown)),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("profileImage", imageDataUri);
+                userProfileRepository.updateUserProfileFields(currentUid, updates, new UserProfileRepository.OperationCallback() {
+                    @Override
+                    public void onSuccess() {
+                        btnChangePhoto.setEnabled(true);
+                        bindProfileImage(imageDataUri);
+                        Toast.makeText(ProfileInformationActivity.this, R.string.profile_photo_updated, Toast.LENGTH_SHORT).show();
                     }
-                    Toast.makeText(ProfileInformationActivity.this, getString(R.string.profile_photo_upload_failed_detail, details), Toast.LENGTH_LONG).show();
+
+                    @Override
+                    public void onError(Exception error) {
+                        btnChangePhoto.setEnabled(true);
+                        String details = error != null ? error.getMessage() : getString(R.string.error_unknown);
+                        Toast.makeText(ProfileInformationActivity.this, getString(R.string.profile_photo_upload_failed_detail, details), Toast.LENGTH_LONG).show();
+                    }
                 });
+            });
+        }).start();
     }
 
     private void saveProfileChanges() {
@@ -212,4 +264,3 @@ public class ProfileInformationActivity extends AppCompatActivity {
         });
     }
 }
-

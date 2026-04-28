@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="140dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp"
+    android:layout_marginEnd="12dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:cardCornerRadius="32dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:id="@+id/ivRiderAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fetch_logo"
+            app:tint="#D32F2F" />
+
+        <View
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:background="@drawable/bg_avatar_circle"
+            android:backgroundTint="#4CAF50"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="4dp"/>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tvRiderName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Rider Name"
+        android:textColor="#B71C1C"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="4dp">
+        
+        <ImageView
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:src="@drawable/ic_location_pin"
+            app:tint="#757575" />
+            
+        <TextView
+            android:id="@+id/tvRiderLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.5 km away"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            android:layout_marginStart="4dp"
+            android:maxLines="1"
+            android:ellipsize="end" />
+    </LinearLayout>
+
+</LinearLayout>

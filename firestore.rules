@@ -26,6 +26,21 @@ service cloud.firestore {
       allow delete: if isOwner(uid) || isAdmin();
     }
 
+    match /pasabuy_posts/{postId} {
+      allow read, create, update: if signedIn();
+      allow delete: if false;
+    }
+
+    match /pasabuy_transactions/{transactionId} {
+      allow read, create, update: if signedIn();
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read, create, update: if signedIn();
+        allow delete: if false;
+      }
+    }
+
     match /tasks/{taskId} {
       allow read, create, update: if signedIn();
       allow delete: if false;

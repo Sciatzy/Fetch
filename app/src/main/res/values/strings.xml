@@ -232,6 +232,10 @@
     <string name="notif_channel_status_updates_desc">Task and delivery status updates</string>
     <string name="notif_default_title">Fetch Update</string>
     <string name="notif_default_body">Your task status has changed.</string>
+    <string name="notif_pasabuy_prompt_title">PasaBuy update</string>
+    <string name="notif_pasabuy_prompt_message">You have a PasaBuy transaction update. Open chat now?</string>
+    <string name="notif_pasabuy_prompt_open">Open chat</string>
+    <string name="notif_pasabuy_prompt_later">Later</string>
 
     <string name="tracking_title">Track Rider</string>
     <string name="tracking_title_rider">Task Navigation</string>
@@ -294,4 +298,23 @@
     <string name="admin_license_format">License: %1$s</string>
     <string name="admin_rider_status_active">Status: Active</string>
     <string name="admin_rider_status_inactive">Status: Inactive</string>
+
+    <string name="pasabuy_menu_my_avails">My Avails</string>
+    <string name="pasabuy_menu_my_transactions">My PasaBuy Transactions</string>
+
+    <string name="transaction_history_title_default">Transaction History</string>
+    <string name="transaction_history_title_customer">My Avails</string>
+    <string name="transaction_history_title_rider">My PasaBuy Transactions</string>
+    <string name="transaction_empty_default_title">No transactions yet</string>
+    <string name="transaction_empty_default_subtitle">Your past rides and deliveries will appear here.</string>
+    <string name="transaction_empty_customer_title">No availed PasaBuy yet</string>
+    <string name="transaction_empty_customer_subtitle">When you avail a rider post, it will appear here.</string>
+    <string name="transaction_empty_rider_title">No PasaBuy transactions yet</string>
+    <string name="transaction_empty_rider_subtitle">Customer avails for your PasaBuy posts will appear here.</string>
+    <string name="transaction_counterpart_fallback">User</string>
+    <string name="transaction_caption_fallback">No caption available.</string>
+    <string name="transaction_status_payment_format">Status: %1$s • Payment: %2$s</string>
+    <string name="transaction_update_fallback">No recent update.</string>
+    <string name="transaction_update_with_time">%1$s • %2$s</string>
+    <string name="transaction_open_chat">Open Chat</string>
 </resources>

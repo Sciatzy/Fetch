@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp"
+    app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/ivRiderAvatar"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/fetch_logo"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_avatar_circle"
+                android:contentDescription="Profile Picture"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:id="@+id/tvRiderName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rider Name"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="2dp">
+                    
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@drawable/ic_location_pin"
+                        app:tint="#B71C1C"/>
+                        
+                    <TextView
+                        android:id="@+id/tvLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jollibee Mactan"
+                        android:textSize="14sp"
+                        android:textColor="#D32F2F"
+                        android:layout_marginStart="4dp"/>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Just now"
+                    android:textSize="12sp"
+                    android:textColor="#9E9E9E"/>
+            </LinearLayout>
+
+			<LinearLayout
+                android:id="@+id/btnAdminOptions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="•••"
+                    android:textSize="24sp"
+                    android:textColor="#9E9E9E"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Instagram-style Scenario Photo -->
+        <ImageView
+            android:id="@+id/ivPostImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:minHeight="300dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/fetch_logo"
+            android:background="#EEEEEE"
+            android:contentDescription="Post Image"/>
+
+        <!-- Instagram-style Interactions Bar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF">
+            
+            <!-- Like Button -->
+            <ImageView
+                android:id="@+id/btnLike"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/ic_heart"
+                app:tint="#000000"
+                android:layout_marginEnd="16dp"/>
+
+            <!-- Avail Button (Replaces Comment/Share) -->
+            <Button
+                android:id="@+id/btnAvail"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Avail"
+                android:textSize="14sp"
+                app:cornerRadius="18dp"
+                app:backgroundTint="#D32F2F"
+                android:textColor="#FFFFFF"/>
+                
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+                
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_bookmark"
+                app:tint="#000000"/>
+        </LinearLayout>
+
+        <!-- Likes Count -->
+        <TextView
+            android:id="@+id/tvLikesCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="12 likes"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="4dp"/>
+
+        <!-- Caption -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="4dp">
+            
+            <TextView
+                android:id="@+id/tvCaptionName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="RiderName "
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="I am here at Jollibee, anyone want to PasaBuy meals? Drop it here!"
+                android:textSize="14sp"
+                android:textColor="#000000"
+                android:layout_marginStart="4dp"
+                android:autoLink="all"/>
+        </LinearLayout>
+
+        <!-- Interactions / Avail Stats -->
+        <TextView
+            android:id="@+id/tvAvailCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View all 3 avail requests"
+            android:textSize="14sp"
+            android:textColor="#757575"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="12dp"/>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

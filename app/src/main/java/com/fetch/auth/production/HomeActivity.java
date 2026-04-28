@@ -1,14 +1,21 @@
 package com.fetch.auth.production;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.fetch.auth.production.pasabuy.PasaBuyTransactionActivity;
 import com.fetch.auth.production.repository.AuthRepository;
 import com.fetch.auth.production.repository.NotificationRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
@@ -21,6 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
 
     private static final String EXTRA_NOTIFICATION_TASK_ID = "extra_notification_task_id";
+    private static final String EXTRA_NOTIFICATION_TRANSACTION_ID = "extra_notification_transaction_id";
     private static final String EXTRA_NOTIFICATION_IS_RIDER = "extra_notification_is_rider";
     private static final String EXTRA_NOTIFICATION_SOURCE = "extra_notification_source";
     private static final String NOTIFICATION_SOURCE_FCM = "fcm";
@@ -28,6 +36,10 @@ public class HomeActivity extends AppCompatActivity {
     private AuthRepository authRepository;
     private UserProfileRepository userProfileRepository;
     private NotificationRepository notificationRepository;
+    private final ActivityResultLauncher<String> notificationPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), granted -> {
+                // No-op. Token sync and in-app flows continue even when user denies notifications.
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
             return;
         }
 
+        requestNotificationPermissionIfNeeded();
         syncFcmToken(user.getUid());
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
@@ -95,8 +108,14 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         String taskId = intent.getStringExtra(EXTRA_NOTIFICATION_TASK_ID);
+        String transactionId = intent.getStringExtra(EXTRA_NOTIFICATION_TRANSACTION_ID);
         boolean isRider = intent.getBooleanExtra(EXTRA_NOTIFICATION_IS_RIDER, false);
         consumeNotificationExtras(intent);
+
+        if (!TextUtils.isEmpty(transactionId)) {
+            showPasabuyPrompt(transactionId);
+            return;
+        }
 
         if (TextUtils.isEmpty(taskId)) {
             return;
@@ -122,7 +141,32 @@ public class HomeActivity extends AppCompatActivity {
     private void consumeNotificationExtras(Intent intent) {
         intent.removeExtra(EXTRA_NOTIFICATION_SOURCE);
         intent.removeExtra(EXTRA_NOTIFICATION_TASK_ID);
+        intent.removeExtra(EXTRA_NOTIFICATION_TRANSACTION_ID);
         intent.removeExtra(EXTRA_NOTIFICATION_IS_RIDER);
+    }
+
+    private void requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
+    }
+
+    private void showPasabuyPrompt(String transactionId) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.notif_pasabuy_prompt_title)
+                .setMessage(R.string.notif_pasabuy_prompt_message)
+                .setPositiveButton(R.string.notif_pasabuy_prompt_open, (dialog, which) -> {
+                    Intent intent = new Intent(this, PasaBuyTransactionActivity.class);
+                    intent.putExtra(PasaBuyTransactionActivity.EXTRA_TRANSACTION_ID, transactionId);
+                    startActivity(intent);
+                })
+                .setNegativeButton(R.string.notif_pasabuy_prompt_later, null)
+                .show();
     }
 
     private void syncFcmToken(String uid) {

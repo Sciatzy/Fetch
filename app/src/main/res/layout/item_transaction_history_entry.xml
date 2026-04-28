@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <TextView
+            android:id="@+id/tvTransactionCounterpart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#111111"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/transaction_counterpart_fallback" />
+
+        <TextView
+            android:id="@+id/tvTransactionCaption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#424242"
+            android:textSize="14sp"
+            android:text="@string/not_available" />
+
+        <TextView
+            android:id="@+id/tvTransactionStatusLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="#616161"
+            android:textSize="13sp"
+            android:text="@string/not_available" />
+
+        <TextView
+            android:id="@+id/tvTransactionLastUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="#757575"
+            android:textSize="12sp"
+            android:text="@string/not_available" />
+
+        <Button
+            android:id="@+id/btnOpenTransactionChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/transaction_open_chat"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            app:backgroundTint="#D32F2F" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

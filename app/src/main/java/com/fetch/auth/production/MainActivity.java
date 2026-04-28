@@ -141,8 +141,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Initialize Google Sign-In
+        String webClientId = resolveDefaultWebClientId("dummy_client_id_for_compilation");
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(webClientId)
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -191,6 +193,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, R.string.auth_error_no_internet, Toast.LENGTH_SHORT).show();
             }
         });
+
+        // Read intent to set default mode
+        if (getIntent() != null && getIntent().hasExtra("IS_LOGIN_MODE")) {
+            boolean modeShouldBeLogin = getIntent().getBooleanExtra("IS_LOGIN_MODE", true);
+            if (isLoginMode != modeShouldBeLogin) {
+                toggleMode();
+            }
+        }
     }
 
     private boolean isNetworkAvailable() {
@@ -213,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void logGoogleConfigDiagnostics() {
-        String webClientId = getString(R.string.default_web_client_id);
+        String webClientId = resolveDefaultWebClientId("missing_web_client_id");
         Log.d(TAG, "Google config package=" + getPackageName());
         Log.d(TAG, "Google config default_web_client_id=" + webClientId);
         try {
@@ -226,6 +236,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e(TAG, "Unable to log signing fingerprints", e);
         }
+    }
+
+    private String resolveDefaultWebClientId(String fallbackValue) {
+        int webClientIdRes = getResources().getIdentifier("default_web_client_id", "string", getPackageName());
+        return webClientIdRes != 0 ? getString(webClientIdRes) : fallbackValue;
     }
 
     private String digestHex(String algorithm, byte[] bytes) throws Exception {

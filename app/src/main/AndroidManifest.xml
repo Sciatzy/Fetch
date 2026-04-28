@@ -12,6 +12,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <application
         android:allowBackup="true"
@@ -49,12 +54,28 @@
         </activity>
 
         <activity
-            android:name="com.fetch.auth.production.MainActivity"
+            android:name="com.fetch.auth.production.SplashActivity"
+            android:theme="@style/Theme.Fetch"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.fetch.auth.production.WelcomeActivity"
+            android:theme="@style/Theme.Fetch"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.OnboardingActivity"
+            android:theme="@style/Theme.Fetch"
+            android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.MainActivity"
+            android:exported="false">
         </activity>
 
         <activity
@@ -121,6 +142,10 @@
             android:name="com.fetch.auth.production.RoutePreviewActivity"
             android:exported="false" />
 
+        <activity
+            android:name="com.fetch.auth.production.RiderAnalyticsActivity"
+            android:exported="false" />
+
         <service
             android:name="com.fetch.auth.production.messaging.FetchFirebaseMessagingService"
             android:exported="false">
@@ -129,10 +154,50 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name="com.fetch.auth.production.pasabuy.PasaBuyFeedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+
+        <activity
+            android:name="com.fetch.auth.production.pasabuy.PasaBuyAvailRequestsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+
+        <activity
+            android:name="com.fetch.auth.production.pasabuy.PasaBuyTransactionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+        
+        <activity
+            android:name="com.fetch.auth.production.TransactionHistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+
+        <activity
+            android:name="com.fetch.auth.production.RewardsHistoryActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+
         <receiver
             android:name="com.fetch.auth.production.location.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="false" />
+
+        <activity
+            android:name="com.fetch.auth.production.pasabuy.AddPasaBuyPostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fetch" />
+            
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

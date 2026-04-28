@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:strokeWidth="0dp">
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,7 +122,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
                     android:layout_marginTop="8dp"
-                    android:text="Continue to Credentials"
+                    android:text="Next: Set Credentials"
+                    android:textColor="@android:color/white"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     android:textStyle="bold"

@@ -31,6 +31,10 @@ This document covers the current mobile-side integration for:
 - `POST /v1/pricing/estimate`
 - `POST /v1/payments/paymongo/checkout`
 - `POST /v1/fcm/register`
+- `POST /v1/fcm/task-status`
+- `POST /v1/fcm/pasabuy-status`
+- `POST /v1/fcm/user-event`
+- `POST /v1/fcm/role-event`
 
 ## Build
 
@@ -43,4 +47,3 @@ Set-Location "C:\Users\SCIATZY MARIE\Documents\Fetch"
 
 - For production, move secret credentials to backend env only.
 - Webhook must update payment status in Firestore using `paymentCheckoutId` and task metadata.
-

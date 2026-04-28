@@ -1,0 +1,20 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    match /profile_images/{uid}/{fileName} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    match /pasabuy_payment_proofs/{transactionId}/{fileName} {
+      allow read, write: if signedIn();
+    }
+
+    match /pasabuy_images/{allPaths=**} {
+      allow read, write: if signedIn();
+    }
+  }
+}

@@ -12,5 +12,6 @@ public final class TaskStatus {
     public static final String ARRIVED_PICKUP = "arrived_pickup";
     public static final String ARRIVED_DROPOFF = "arrived_dropoff";
     public static final String COMPLETED = "completed";
+    public static final String CANCELLED = "cancelled";
 }
 

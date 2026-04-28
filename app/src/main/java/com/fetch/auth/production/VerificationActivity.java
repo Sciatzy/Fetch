@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.fetch.auth.production.repository.AuthRepository;
+import com.fetch.auth.production.repository.NotificationRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +24,7 @@ public class VerificationActivity extends AppCompatActivity {
 
     private AuthRepository authRepository;
     private UserProfileRepository userProfileRepository;
+    private NotificationRepository notificationRepository;
 
     private TextView tvVerificationStatus;
     private TextView tvVerificationRole;
@@ -39,6 +41,7 @@ public class VerificationActivity extends AppCompatActivity {
 
         authRepository = new AuthRepository();
         userProfileRepository = new UserProfileRepository();
+        notificationRepository = new NotificationRepository();
 
         tvVerificationStatus = findViewById(R.id.tvVerificationStatus);
         tvVerificationRole = findViewById(R.id.tvVerificationRole);
@@ -110,6 +113,7 @@ public class VerificationActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Toast.makeText(VerificationActivity.this, R.string.verification_submit_success, Toast.LENGTH_SHORT).show();
+                notificationRepository.sendRoleEventPush("admin", "verification_submitted", currentUid);
                 loadVerificationStatus();
             }
 
@@ -162,4 +166,3 @@ public class VerificationActivity extends AppCompatActivity {
                 : getString(R.string.verification_note_customer_optional);
     }
 }
-

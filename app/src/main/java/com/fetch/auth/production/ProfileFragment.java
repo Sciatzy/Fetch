@@ -16,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.fetch.auth.production.repository.AuthRepository;
 import com.fetch.auth.production.repository.UserProfileRepository;
+import com.fetch.auth.production.util.StorageBackedImageLoader;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -55,6 +55,9 @@ public class ProfileFragment extends Fragment {
                     if (!isAdded()) return;
                     String name = document.getString("name");
                     String profileImage = document.getString("profileImage");
+                    if (TextUtils.isEmpty(profileImage)) {
+                        profileImage = document.getString("profileImageUrl");
+                    }
 
                     tvProfileName.setText(!TextUtils.isEmpty(name) ? name : getString(R.string.profile_name_fallback));
                     bindAvatar(ivProfileAvatar, profileImage);
@@ -103,17 +106,6 @@ public class ProfileFragment extends Fragment {
 
     private void bindAvatar(ImageView imageView, String imageUrl) {
         if (!isAdded()) return;
-
-        if (TextUtils.isEmpty(imageUrl)) {
-            imageView.setImageResource(R.drawable.fetch_logo);
-            return;
-        }
-
-        Glide.with(this)
-                .load(imageUrl)
-                .placeholder(R.drawable.fetch_logo)
-                .error(R.drawable.fetch_logo)
-                .circleCrop()
-                .into(imageView);
+        StorageBackedImageLoader.load(imageView, imageUrl, R.drawable.fetch_logo, true);
     }
 }

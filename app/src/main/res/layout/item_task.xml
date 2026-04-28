@@ -5,9 +5,10 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginBottom="16dp"
-    app:cardBackgroundColor="@color/glass_white_alpha"
+    
+        app:cardBackgroundColor="#E6FFFFFF"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/glass_border"
+        app:strokeColor="#FFFFFF"
         app:cardElevation="0dp"
     app:cardCornerRadius="16dp">
 
@@ -15,14 +16,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="16dp">
 
         <!-- Status & Budget Row (Fixing Budget layout) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:baselineAligned="false">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -31,21 +33,21 @@
                 android:textColor="@color/glass_red"
                 android:textStyle="bold"
                 android:textSize="12sp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/bg_pending_badge"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="6dp" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="0dp" />
-
             <TextView
                 android:id="@+id/tvTaskBudget"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
+                android:maxLines="2"
+                android:gravity="end"
+                android:ellipsize="end"
                 android:textColor="@color/glass_red" />
         </LinearLayout>
 
@@ -118,29 +120,37 @@
                 android:id="@+id/btnPreviewRoute"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
+                android:minHeight="52dp"
+                android:padding="8dp"
                 android:text="@string/task_preview_route"
                 android:textAllCaps="false"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/bg_button_ghost"
                 app:backgroundTint="@null"
                 android:textColor="@color/text_primary"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginEnd="4dp" />
 
             <Button
                 android:id="@+id/btnAcceptTask"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
+                android:minHeight="52dp"
+                android:padding="8dp"
                 android:text="@string/accept_task"
                 android:textAllCaps="false"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
+                android:maxLines="1"
+                android:autoSizeTextType="uniform"
                 android:background="@drawable/bg_button_primary"
                 app:backgroundTint="@null"
                 android:textColor="@color/glass_white"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="4dp" />
         </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

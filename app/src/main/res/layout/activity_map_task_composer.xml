@@ -24,8 +24,8 @@
         app:cardCornerRadius="24dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/glass_border"
-        app:cardBackgroundColor="@color/glass_white_alpha"
+        app:strokeColor="#FFFFFF"
+        app:cardBackgroundColor="#E6FFFFFF"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -140,12 +140,11 @@
         app:cardCornerRadius="50dp"
         app:cardElevation="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/glass_border"
-        app:cardBackgroundColor="@color/glass_white_alpha"
+        app:strokeColor="#FFFFFF"
+        app:cardBackgroundColor="#E6FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/topInputCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
-        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -164,8 +163,8 @@
         app:cardElevation="0dp"
         app:cardCornerRadius="0dp"
         app:strokeWidth="1dp"
-        app:strokeColor="@color/glass_border"
-        app:cardBackgroundColor="@color/glass_white_alpha"
+        app:strokeColor="#FFFFFF"
+        app:cardBackgroundColor="#E6FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
